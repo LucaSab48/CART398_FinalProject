@@ -67,7 +67,9 @@ function draw() {
     
     if (segmentationActive && segmentation) {
         video.mask(segmentation.mask);
-        image(video, 0, 0, width, height); 
+        image(video, 0, 0, width, height);
+        translate(width, 0); //Moves position of video to flip video
+        scale(-1, 1); //Mirrors video 
     }
     
     if (millis() - screenshotTime > intervalRate) {
