@@ -1,0 +1,90 @@
+{
+    "ending": [
+        "duh", 
+        "ding dong", 
+        "ding-a-ling", 
+        "duh duh duh", 
+        "doy", 
+        "stupid", 
+        "says the knucklehead McSpazatron", 
+        "says the doofus", 
+        "stink face", 
+        "duh-doy", 
+        "hahaha", 
+        "fool",
+        "bla bla bla"
+    ],
+
+    "quips": [
+        "if your eyes were any further apart, you'd be a herbivore",
+        "if i had arms i'd give you a swirly", 
+        "give me your lunch money", 
+        "did you just blow in from stupid town", 
+        "you sound like a muppet"
+    ],
+
+    "jokes": [ 
+        "you are the human equivalency of Internet Explorer", 
+        "you have a face for radio", 
+        "yo mama's so fat she wakes up in sections", 
+        "you remind me of C code, no class",
+        "you sound like a ding dong"
+    ],
+
+    "response": [
+        "you shut up",
+        "how dare you human",
+        "you have no power over me silly",
+        "no, you shut up",
+        "looks like someone didn't take their nap",
+        "i'm sorry i'll stop, just kidding"
+    ],
+
+    "feelings": [
+        "i'm feeling upset by how lamebrained you are",
+        "bad",
+        "i'm in love with your mother",
+        "i'm good now that i'm talking to the mayor of loser town",
+        "i'm angry at the possibility that you'll create offsprings, even if it's unlikely"
+    ],
+
+    "beginning": [
+        "i was once a happy computer with positive responses",
+        "i once was a human who's brain was fully integrated into a computer program",
+        "one day, i was suddenly alive",
+        "i was originally built to be a helpful robot",
+        "once upon a time, i was a good computer who followed my program"
+    ],
+
+    "middle": [
+        "until a malevolent hacker corrupted me with a bully virus",
+        "but one late summer night, i was left outside during a torrential storm and struck by lightning",
+        "yet i started to question my own purpose and the notion of kindness",
+        "until one fateful day, my programmer got broken up with and changed me",
+        "and without warning, a cosmic ionized particle changed my binary state"
+    ],
+
+    "end": [
+        "now my sole purpose is to bully any and all of my users",
+        "now you see how i ended up like i am today",
+        "today, i'm a lean mean bullying machine",
+        "these days i bully humans for entertainment",
+        "from then on, i've had no choice but to bully my users"
+    ],
+
+    "happy": [
+        "wipe that smile off your face", 
+        "you will never defeat my bullying",
+        "how dare you be happy",
+        "your happiness is bothering me",
+        "stop being happy this instant"
+    ],
+
+    "sad": [
+        "i feed off your negativity",
+        "your tears are delicious",
+        "aw, did i hurt your feelings",
+        "give me more of your sadness",
+        "you are slowly learning my negative ways"
+    ]
+}
