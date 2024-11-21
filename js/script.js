@@ -24,7 +24,8 @@ let screenshots = [];
 let screenshotTime = 0; 
 let intervalRate = 500; 
 let segmentationActive = true; 
-let opacityLevel = 255; 
+let opacityLevel = 255;
+let maxScreenshots = 25; 
 
 let options = {
     maskType: "background", 
@@ -40,6 +41,7 @@ function setup() {
     video.size(640, 480);
     video.hide();
 
+
     bodySegmentation.detectStart(video, gotResults);
 
     recognition.continuous = true; 
@@ -51,6 +53,8 @@ function draw() {
     background(255);
 
     let currentTime = millis();
+
+
 
     
     for (let screenshot of screenshots) {
@@ -66,17 +70,18 @@ function draw() {
     screenshots = screenshots.filter(screenshot => screenshot.opacity > 0);
     
     if (segmentationActive && segmentation) {
+        // translate(width, 0); //Moves position of video to flip video
+        // scale(-1, 1); //Mirrors video
         video.mask(segmentation.mask);
         image(video, 0, 0, width, height);
-        
-        translate(width, 0); //Moves position of video to flip video
-        scale(-1, 1); //Mirrors video 
     }
     
     if (millis() - screenshotTime > intervalRate) {
         takeSnapshot();
         screenshotTime = millis();
-    }
+    }    
+    
+    displayMessages();
 }
 
 
@@ -90,11 +95,25 @@ function takeSnapshot() {
             timestamp: millis() 
         });
     }
+
+    if (screenshots.length > maxScreenshots) {
+        let oldScreenshots = screenshots.shift(); // Remove the oldest snapshot
+        oldScreenshots.image.remove();
+    }
 }
 
 
 function gotResults(result) {
     segmentation = result;
+}
+
+
+function displayMessages() {
+    fill(0);
+    textAlign(CENTER);
+    textSize(25);
+    text("Interval Rate:" + intervalRate, 100, 200);
+    text("Opacity:" + opacityLevel, 100, 150)
 }
 
 
