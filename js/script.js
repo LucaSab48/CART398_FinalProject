@@ -25,6 +25,8 @@ let screenshotTime = 0;
 let intervalRate = 500; 
 let segmentationActive = true; 
 let opacityLevel = 255;
+let saturationLevel1 = 255;
+let saturationLevel2 = 255;
 let maxScreenshots = 25; 
 
 let options = {
@@ -58,11 +60,11 @@ function draw() {
 
     
     for (let screenshot of screenshots) {
-        tint(255, screenshot.opacity); 
+        tint(255, saturationLevel1, saturationLevel2, screenshot.opacity); 
         image(screenshot.image, 0, 0, width, height); 
         screenshot.opacity = opacityLevel;
 
-        if (currentTime - screenshot.timestamp > 10000) {
+        if (currentTime - screenshot.timestamp > 10000 && segmentationActive) {
             screenshot.opacity = 0; 
         }
     }
@@ -96,7 +98,7 @@ function takeSnapshot() {
         });
     }
 
-    if (screenshots.length > maxScreenshots) {
+    if (screenshots.length > maxScreenshots && segmentationActive) {
         let oldScreenshots = screenshots.shift(); // Remove the oldest snapshot
         oldScreenshots.image.remove();
     }
@@ -114,10 +116,32 @@ function displayMessages() {
     textSize(25);
     text("Interval Rate:" + intervalRate, 100, 200);
     text("Opacity:" + opacityLevel, 100, 150)
+    text("SaturationR:" + saturationLevel1, 100, 250); 
+    text("SaturationG:" + saturationLevel2, 100, 300); 
 }
 
 
 function keyPressed() {
+    // Increase saturation with M key
+    if (key === 'm' || key === 'M') {
+        saturationLevel1 = min(saturationLevel1 + 10, 255); // Clamp to max value of 255
+    }
+    
+    // Decrease saturation with N key
+    if (key === 'n' || key === 'N') {
+        saturationLevel1 = max(saturationLevel1 - 10, 0); // Clamp to min value of 0
+    }
+
+    // Increase saturation with M key
+    if (key === 'v' || key === 'V') {
+        saturationLevel2 = min(saturationLevel2 + 10, 255); // Clamp to max value of 255
+    }
+        
+    // Decrease saturation with N key
+    if (key === 'b' || key === 'B') {
+        saturationLevel2 = max(saturationLevel2 - 10, 0); // Clamp to min value of 0
+    }
+
     // Increase opacity change rate with Up arrow
     if (keyCode === UP_ARROW) {
         opacityLevel = min(opacityLevel + 10, 255); 
