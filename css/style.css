@@ -1,20 +1,70 @@
-/*********************************************
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>CART398 Final Project</title>
 
-Here is a description of any special CSS used.
-In this case it's just padding and margin to 0
-and then centring the canvas (and anything else)
-using the CSS Grid.
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Doto:wght@300&family=Geo:ital@0;1&family=Nunito:ital,wght@0,900;1,900&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Tiny5&display=swap"
+      rel="stylesheet">
 
-Also hides overflow.
+    <!-- CSS stylesheet(s) -->
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
 
-**********************************************/
+    <!-- Library script(s) -->
+    <script src="js/libraries/p5.min.js"></script>
+    <script src="js/libraries/p5.sound.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/IDMNYU/p5.js-speech@0.0.3/lib/p5.speech.js"></script>
+    <script src="https://unpkg.com/ml5@latest/dist/ml5.min.js"></script> 
 
-body {
-  padding: 0;
-  margin: 0;
-  display: grid; /* Set up the grid and justify/align to center */
-  justify-content: center;
-  align-content: center;
-  height: 100vh; /* Body is the height of the viewport */
-  overflow: hidden; /* Hide anything that goes off the window size */
-}
+    <!-- My script(s) -->
+    <script src="js/script.js"></script>
+
+    <style>
+      body {
+        font-family: 'Doto', sans-serif;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      #canvas-container {
+        margin-top: 20px;
+      }
+
+      #controls {
+        margin-top: 10px;
+        width: 300px;
+      }
+
+      .slider-container {
+        margin-bottom: 20px;
+      }
+
+      label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+
+      input[type="range"] {
+        width: 100%;
+      }
+
+      output {
+        margin-left: 10px;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Canvas will be dynamically inserted here -->
+    <div id="canvas-container"></div>
+  </body>
+</html>

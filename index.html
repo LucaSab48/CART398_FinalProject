@@ -1,10 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <title>CART398 Final Project</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Doto:wght@300&family=Geo:ital@0;1&family=Nunito:ital,wght@0,900;1,900&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Tiny5&display=swap"
+      rel="stylesheet">
 
     <!-- CSS stylesheet(s) -->
     <link rel="stylesheet" type="text/css" href="css/style.css" />
@@ -17,10 +23,82 @@
 
     <!-- My script(s) -->
     <script src="js/script.js"></script>
+
+    <style>
+      body {
+        font-family: 'Doto', sans-serif;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      #main-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-top: 20px;
+        width: 90%;
+      }
+
+      #controls {
+        margin-left: 20px;
+        flex-shrink: 0;
+      }
+
+      .slider-container {
+        margin-bottom: 20px;
+      }
+
+      label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+
+      input[type="range"] {
+        width: 300px;
+      }
+
+      output {
+        margin-left: 10px;
+        font-weight: bold;
+      }
+
+      #canvas-container {
+        flex-grow: 1;
+      }
+
+      #file-upload {
+        margin-bottom: 20px;
+      }
+    </style>
   </head>
 
   <body>
-    <!-- HTML would go here if needed. -->
-  </body>
+    <div id="main-container">
 
+      <!-- Controls Section -->
+      <div style="display: flex;flex-direction: column;">
+        <div id="controls">
+          <div class="slider-container">
+            <label for="opacity-slider">Opacity:</label>
+            <input id="opacity-slider" type="range" min="0" max="255" value="255">
+            <output id="opacity-value">255</output>
+          </div>
+          <div class="slider-container">
+            <label for="interval-slider">Interval Rate (ms):</label>
+            <input id="interval-slider" type="range" min="400" max="2000" step="50" value="500">
+            <output id="interval-value">500</output>
+          </div>
+        </div>
+        <input style="transform: translateX(2vw)" id="file-upload" type="file">
+      </div>
+
+            <!-- Canvas and File Upload Section -->
+            <div id="canvas-section">
+              <div id="canvas-container"></div>
+            </div>
+    </div>
+  </body>
 </html>

@@ -25,42 +25,65 @@ let screenshotTime = 0;
 let intervalRate = 500; 
 let segmentationActive = true; 
 let opacityLevel = 255;
-let saturationLevel1 = 255;
-let saturationLevel2 = 255;
 let maxScreenshots = 25; 
 
 let options = {
     maskType: "background", 
 };
 
+let bgImage; // Variable to store the user-uploaded background image
+
 function preload() {
     bodySegmentation = ml5.bodySegmentation("SelfieSegmentation", options);
 }
 
 function setup() {
-    createCanvas(1280, 960); 
-    video = createCapture(VIDEO);
-    video.size(640, 480);
-    video.hide();
+    // Create canvas and place it inside the container
+    let canvas = createCanvas(windowWidth * 0.65, windowHeight * 0.9);
+    canvas.parent("canvas-container");
 
+    video = createCapture(VIDEO);
+    video.size(640, 480); // Keep video size fixed
+    video.hide();
 
     bodySegmentation.detectStart(video, gotResults);
 
     recognition.continuous = true; 
     recognition.onResult = handleResult; // This calls for the voice recognizer to run the handleResult function when it has a result 
     recognition.start(); // Starts the voice recognition
+
+    const opacitySlider = document.getElementById("opacity-slider");
+    const opacityValue = document.getElementById("opacity-value");
+    const intervalSlider = document.getElementById("interval-slider");
+    const intervalValue = document.getElementById("interval-value");
+
+    // Update opacity level from slider
+    opacitySlider.addEventListener("input", () => {
+        opacityLevel = parseInt(opacitySlider.value, 10);
+        opacityValue.textContent = opacityLevel;
+    });
+
+// Update interval rate from slider
+    intervalSlider.addEventListener("input", () => {
+        intervalRate = parseInt(intervalSlider.value, 10);
+        intervalValue.textContent = intervalRate;
+    });
 }
 
 function draw() {
-    background(255);
+    background(255); // Default white background
+    
+    // If a background image is loaded, display it without applying tint
+    if (bgImage) {
+        noTint(); // Reset tint to default (no transparency effect)
+        image(bgImage, 0, 0, width, height); // Stretch background to fit the canvas
+    }
 
     let currentTime = millis();
 
-
-
-    
+    // Display existing screenshots with opacity fading over time
     for (let screenshot of screenshots) {
-        tint(255, saturationLevel1, saturationLevel2, screenshot.opacity); 
+        tint(255, screenshot.opacity); // Apply opacity to screenshots only
         image(screenshot.image, 0, 0, width, height); 
         screenshot.opacity = opacityLevel;
 
@@ -71,11 +94,11 @@ function draw() {
     
     screenshots = screenshots.filter(screenshot => screenshot.opacity > 0);
     
+    // Only show video if segmentation is active
     if (segmentationActive && segmentation) {
-        // translate(width, 0); //Moves position of video to flip video
-        // scale(-1, 1); //Mirrors video
         video.mask(segmentation.mask);
-        image(video, 0, 0, width, height);
+        tint(255); // Reset tint to default for the video layer
+        image(video, 0, 0, width, height); // Stretch video to canvas size
     }
     
     if (millis() - screenshotTime > intervalRate) {
@@ -86,6 +109,10 @@ function draw() {
     displayMessages();
 }
 
+function windowResized() {
+    // Adjust only the canvas size, leave video unchanged
+    resizeCanvas(windowWidth * 0.7, windowHeight * 0.8); // Keep 70% width and 80% height on resize
+}
 
 function takeSnapshot() {
     if (segmentationActive && segmentation) {
@@ -104,44 +131,23 @@ function takeSnapshot() {
     }
 }
 
-
 function gotResults(result) {
     segmentation = result;
 }
 
-
 function displayMessages() {
-    fill(0);
-    textAlign(CENTER);
-    textSize(25);
-    text("Interval Rate:" + intervalRate, 100, 200);
-    text("Opacity:" + opacityLevel, 100, 150)
-    text("SaturationR:" + saturationLevel1, 100, 250); 
-    text("SaturationG:" + saturationLevel2, 100, 300); 
+    fill(255); // Sets text color to black
+    textAlign(LEFT, TOP); // Aligns the text to the top-left corner
+    textSize(20); // Adjust font size for better readability
+    textFont('Doto');
+
+    stroke(0, 0, 0, 255); // Set border color to black (you can change the color here)
+    strokeWeight(1); // Set the border thickness (you can adjust this value)
+    text("Opacity: " + opacityLevel, 10, 5); // Display opacity in the top-left corner
+    text("Interval Rate: " + intervalRate, 10, 25); // Display interval rate slightly below
 }
 
-
 function keyPressed() {
-    // Increase saturation with M key
-    if (key === 'm' || key === 'M') {
-        saturationLevel1 = min(saturationLevel1 + 10, 255); // Clamp to max value of 255
-    }
-    
-    // Decrease saturation with N key
-    if (key === 'n' || key === 'N') {
-        saturationLevel1 = max(saturationLevel1 - 10, 0); // Clamp to min value of 0
-    }
-
-    // Increase saturation with M key
-    if (key === 'v' || key === 'V') {
-        saturationLevel2 = min(saturationLevel2 + 10, 255); // Clamp to max value of 255
-    }
-        
-    // Decrease saturation with N key
-    if (key === 'b' || key === 'B') {
-        saturationLevel2 = max(saturationLevel2 - 10, 0); // Clamp to min value of 0
-    }
-
     // Increase opacity change rate with Up arrow
     if (keyCode === UP_ARROW) {
         opacityLevel = min(opacityLevel + 10, 255); 
@@ -188,17 +194,34 @@ function handleResult() {
     console.log(spoke);
 }
 
-
 function offResponse() {
     segmentationActive = false; 
 }
 
-// Function that is assigned to the command callback 
 function clearResponse() {
     screenshots = [];
 }
 
-// Function also assigned to the command callback
 function startResponse() {
     segmentationActive = true; 
 }
+
+function handleFile(file) {
+    if (file.type === 'image') {
+        bgImage = loadImage(file.data); // Load the user-selected image
+    } else {
+        console.log("Not an image file!");
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
