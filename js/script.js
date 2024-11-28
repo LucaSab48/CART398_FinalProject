@@ -127,7 +127,7 @@ function draw() {
         screenshotTime = millis();
     }    
     
-    displayMessages();
+    // displayMessages();
 }
 
 function windowResized() {
