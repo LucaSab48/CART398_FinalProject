@@ -49,9 +49,9 @@ function setup() {
 
     bodySegmentation.detectStart(video, gotResults);
 
-    // recognition.continuous = true; 
-    // recognition.onResult = handleResult; // This calls for the voice recognizer to run the handleResult function when it has a result 
-    // recognition.start(); // Starts the voice recognition
+    recognition.continuous = true; 
+    recognition.onResult = handleResult; // This calls for the voice recognizer to run the handleResult function when it has a result 
+    recognition.start(); // Starts the voice recognition
 
     fileInput = createFileInput(handleFile);
     fileInput.position(100, 350);
@@ -114,7 +114,6 @@ function draw() {
         }
     }
     
-    screenshots = screenshots.filter(screenshot => screenshot.opacity > 0);
     
     // Only show video if segmentation is active
     if (segmentationActive && segmentation) {
@@ -128,7 +127,7 @@ function draw() {
         screenshotTime = millis();
     }    
     
-    // displayMessages();
+    displayMessages();
 }
 
 function windowResized() {
