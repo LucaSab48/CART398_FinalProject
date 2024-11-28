@@ -32,6 +32,7 @@ let options = {
 };
 
 let bgImage; // Variable to store the user-uploaded background image
+let fileInput;
 
 function preload() {
     bodySegmentation = ml5.bodySegmentation("SelfieSegmentation", options);
@@ -48,9 +49,13 @@ function setup() {
 
     bodySegmentation.detectStart(video, gotResults);
 
-    recognition.continuous = true; 
-    recognition.onResult = handleResult; // This calls for the voice recognizer to run the handleResult function when it has a result 
-    recognition.start(); // Starts the voice recognition
+    // recognition.continuous = true; 
+    // recognition.onResult = handleResult; // This calls for the voice recognizer to run the handleResult function when it has a result 
+    // recognition.start(); // Starts the voice recognition
+
+    fileInput = createFileInput(handleFile);
+    fileInput.position(100, 350);
+    applyFileButtonStyles(fileInput);
 
     const opacitySlider = document.getElementById("opacity-slider");
     const opacityValue = document.getElementById("opacity-value");
@@ -63,16 +68,33 @@ function setup() {
         opacityValue.textContent = opacityLevel;
     });
 
-// Update interval rate from slider
+    // Update interval rate from slider
     intervalSlider.addEventListener("input", () => {
         intervalRate = parseInt(intervalSlider.value, 10);
         intervalValue.textContent = intervalRate;
     });
+
+    // Create the 'Add Layer' button
+    let addLayerButton = createButton('Add Layer');
+    addLayerButton.position(100, 600); // Adjust the position as needed
+    addLayerButton.mousePressed(saveCurrentCanvasAsBackground);
+    applyButtonStyles(addLayerButton);
+
+    // Create the 'Free Paint' button
+    let freePaintButton = createButton('Free Paint');
+    freePaintButton.position(100, 650); // Adjust the position as needed
+    freePaintButton.mousePressed(activateFreePaintMode);
+    applyButtonStyles(freePaintButton);
 }
 
+let freePaintMode = false;
 function draw() {
-    background(255); // Default white background
-    
+    if (!freePaintMode)
+        background(255); // Default white background
+
+    if (freePaintMode)
+        bgImage = get(); 
+
     // If a background image is loaded, display it without applying tint
     if (bgImage) {
         noTint(); // Reset tint to default (no transparency effect)
@@ -106,7 +128,7 @@ function draw() {
         screenshotTime = millis();
     }    
     
-    displayMessages();
+    // displayMessages();
 }
 
 function windowResized() {
@@ -214,14 +236,59 @@ function handleFile(file) {
     }
 }
 
+function saveCurrentCanvasAsBackground() {
+    bgImage = get(); // Capture current canvas content as an image
+}
 
+function activateFreePaintMode()
+{
+    freePaintMode = !freePaintMode;
+}
 
+function applyButtonStyles(button) {
 
+    button.style('align-items', 'center');
+    button.style('appearance', 'button');
+    button.style('background-color', '#0276FF');
+    button.style('border-radius', '8px');
+    button.style('border-style', 'none');
+    button.style('box-shadow', 'rgba(255, 255, 255, 0.26) 0 1px 2px inset');
+    button.style('box-sizing', 'border-box');
+    button.style('color', '#fff');
+    button.style('cursor', 'pointer');
+    button.style('display', 'flex');
+    button.style('flex-direction', 'row');
+    button.style('flex-shrink', '0');
+    button.style('font-family', '"RM Neue", sans-serif');
+    button.style('font-size', '100%');
+    button.style('line-height', '1.15');
+    button.style('margin', '0');
+    button.style('padding', '10px 21px');
+    button.style('text-align', 'center');
+    button.style('text-transform', 'none');
+    button.style('transition', 'color .13s ease-in-out, background .13s ease-in-out, opacity .13s ease-in-out, box-shadow .13s ease-in-out');
+}
 
-
-
-
-
-
-
-
+function applyFileButtonStyles(button) {
+    
+    button.style('align-items', 'center');
+    button.style('appearance', 'button');
+    button.style('background-color', '#0276FF');
+    button.style('border-radius', '8px');
+    button.style('border-style', 'none');
+    button.style('box-shadow', 'rgba(255, 255, 255, 0.26) 0 1px 2px inset');
+    button.style('box-sizing', 'border-box');
+    button.style('color', '#fff');
+    button.style('cursor', 'pointer');
+    button.style('display', 'flex');
+    button.style('flex-direction', 'row');
+    button.style('flex-shrink', '0');
+    button.style('font-family', '"RM Neue", sans-serif');
+    button.style('font-size', '100%');
+    button.style('line-height', '1.15');
+    button.style('margin', '0');
+    button.style('padding', '10px 5px');
+    button.style('text-align', 'center');
+    button.style('text-transform', 'none');
+    button.style('transition', 'color .13s ease-in-out, background .13s ease-in-out, opacity .13s ease-in-out, box-shadow .13s ease-in-out');
+}
